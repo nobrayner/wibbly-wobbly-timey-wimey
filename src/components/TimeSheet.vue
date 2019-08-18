@@ -6,7 +6,7 @@
       <h2>Ticket</h2>
       <h2>Details</h2>
     </header>
-    <section v-if="hasEntries">
+    <section v-if="hasEntries" class="time-entries">
       <time-entry v-for="timeEntry in timeSheet.timeEntries" :key="timeEntry" :timeEntryID="timeEntry" />
     </section>
     <section v-else>
@@ -58,43 +58,26 @@ export default {
 </script>
 
 <style>
-.timesheet {
-  display: grid;
-  grid-row-gap: 0.1em;
+.timesheet header {
+  padding: 0 0.5em 0.75em 0.5em;
 }
-.timesheet > header {
-  margin-bottom: 0.75em;
+.timesheet footer {
+  padding: 0 0.5em;
 }
-.timesheet > header, .timesheet > footer {
-  padding: 0 2em;
-}
-.timesheet > header > h2 {
+.timesheet header h2 {
   font-weight: bold;
   display: inline-block;
   font-size: 1.1em;
 }
-.timesheet > header > h2:nth-child(1) {
-  padding: 0.5rem;
-  width: 5rem;
-  margin-right: 1rem;
-}
-.timesheet > header > h2:nth-child(2) {
-  width: 5.5rem;
-  margin-right: 1rem;
-}
-.timesheet > header > h2:nth-child(3) {
-  width: 9em;
+.timesheet section.time-entries {
+  margin-left: -2em;
 }
 p.no_data {
-  grid-area: timeentry;
-  margin-left: 2em;
-  padding: calc(0.5em + 1px) 0.5em;
+  padding: 0 0.5em;
   line-height: 1.5em;
   color: #999999;
 }
 button.update-timelogs {
-  margin: 0 0.5em;
-  margin-bottom: 2em;
   background-color: hsl(134, 61%, 41%);
   color: white;
   border: 1px solid hsl(134, 61%, 41%);

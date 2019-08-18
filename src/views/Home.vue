@@ -22,7 +22,4 @@ export default {
 </script>
 
 <style>
-.home {
-  padding-top: 1rem;
-}
 </style>
