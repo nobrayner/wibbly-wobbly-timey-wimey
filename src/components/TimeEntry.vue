@@ -39,6 +39,7 @@ export default {
       })
     },
     removeTimeEntry () {
+      // need to stop event if the button is hidden
       this.$store.dispatch('removeTimeEntry', this.timeEntryID)
     }
   },
