@@ -142,7 +142,11 @@ export default new Vuex.Store({
       if (timeEntries.length >= 2) {
         let lastEntry = timeEntries[timeEntries.length - 2]
         // if (!lastEntry.timeEnd) { // May need this...
-        lastEntry.timeEnd = newEntry.timeStart
+        commit('UPDATE_TIME_ENTRY', {
+          timeEntryID: lastEntry.id,
+          property: 'timeEnd',
+          newValue: newEntry.timeStart
+        })
         // }
       }
     },
