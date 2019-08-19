@@ -1,12 +1,20 @@
 <template>
   <section class="time-entry">
     <button :ref="'time_entry_rm_' + timeEntry.id" class="remove-time-entry" @click="removeTimeEntry">X</button>
+
+    <label :for="'time_entry_start_' + timeEntry.id" class="title time-start-label">Start</label>
     <input type="text" :name="'time_entry_start_' + timeEntry.id" maxlength="8" class="time-start" required
            :value="timeEntry.timeStart" @input="timeEntryUpdate('timeStart', $event)" />
+
+    <label :for="'time_entry_end_' + timeEntry.id" class="title time-end-label">End</label>
     <input type="text" :name="'time_entry_end_' + timeEntry.id" maxlength="8" class="gray time-end"
            :value="timeEntry.timeEnd" @input="timeEntryUpdate('timeEnd', $event)" />
+
+    <label :for="'time_entry_ticket_id_' + timeEntry.id" class="title ticket-id-label">Ticket ID</label>
     <input :id="'time_entry_ticket_id_' + timeEntry.id" type="text" :name="'time_entry_ticket_id_' + timeEntry.id"
            :value="timeEntry.ticketID" @input="timeEntryUpdate('ticketID', $event)" class="uppercase ticket-id" required />
+
+    <label :for="'time_entry_details_' + timeEntry.id" class="title details-label">Details</label>
     <textarea :ref="'time_entry_details_' + timeEntry.id" :name="'time_entry_details_' + timeEntry.id" class="details"
               :value="timeEntry.details" @input="expand_textarea(timeEntry.id); timeEntryUpdate('details', $event)" required ></textarea>
   </section>
@@ -39,7 +47,6 @@ export default {
       })
     },
     removeTimeEntry () {
-      // need to stop event if the button is hidden
       this.$store.dispatch('removeTimeEntry', this.timeEntryID)
     }
   },

@@ -55,6 +55,9 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	color: #2c3e50;
 }
+.page {
+	text-align: left;
+}
 
 /* Sizing */
 #app {
@@ -64,32 +67,66 @@ body {
 }
 .time-entry {
 	display: grid;
-	grid-template-columns: 2em minmax(5.5em, 2.25fr) minmax(6.5em, 3.25fr) minmax(10em, 5fr); /* 2em 5.5em 6.5em 10em; */
-	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 2em minmax(5.5em, 2.25fr) minmax(6.5em, 3.25fr) minmax(10em, 5fr);
 	grid-template-areas:
-		"x s e t"
-		"x d d d";
+		"x sl el tl"
+		"x s  e  t "
+		"x dl .  . "
+		"x d  d  d ";
+	margin-bottom: 1em;
+}
+.timesheet header {
+	visibility: hidden;
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+}
+.time-start-label {
+	grid-area: sl;
+}
+.time-end-label {
+	grid-area: el;
+}
+.ticket-id-label {
+	grid-area: tl;
+}
+.details-label {
+	grid-area: dl;
 }
 @media screen and (min-width: 754px) {
 	#app {
-		width: 754;
-		max-width: 754;
-		/* width: 874px;
-		max-width: 874px; */
+		width: 754px;
+		max-width: 754px;
 	}
 	.time-entry {
 		grid-template-columns: 2em 5.5em 6.5em 10em 1fr;
-		grid-template-rows: 1fr;
 		grid-template-areas:
 			"x s e t d"
 	}
-	.time-entry > *:nth-child(n+3) {
+	.time-entry > input:nth-child(n+4), .time-entry > textarea {
 		margin-left: 1em;
+	}
+	.time-start-label, .time-end-label, .ticket-id-label, .details-label {
+		visibility: hidden;
+		position: absolute;
+		top: -9999px;
+		lefT: -9999px;
+	}
+	.timesheet header {
+		padding: 0 0.5em 0.75em 0.5em;
+		visibility: visible;
+		position: initial;
+		top: initial;
+		left: initial;
 	}
 }
 
 /* Controls */
 
+label {
+	padding: 0.5em;
+	color: #777777;
+}
 textarea {
 	resize: none;
 }
@@ -146,12 +183,13 @@ button.remove-time-entry {
   color: white;
   border: 1px solid red;
 	opacity: 0;
+	visibility: hidden;
   transition: visibility, opacity 0.2s ease-in-out;
 }
 .time-entry:hover > button.remove-time-entry, .time-entry:focus > button.remove-time-entry {
 	color: white;
 	opacity: 1;
-	display: inline-block;
+	visibility: visible;
 	border-color: red;
 }
 .time-start {
@@ -165,4 +203,35 @@ button.remove-time-entry {
 }
 .details {
 	grid-area: d;
+}
+.timesheet footer {
+  padding: 0 0.5em;
+}
+.title {
+  font-weight: bold;
+  display: inline-block;
+  font-size: 1.1em;
+}
+.timesheet section.time-entries {
+  margin-left: -2em;
+}
+p.no_data {
+  padding: 0 0.5em;
+  line-height: 1.5em;
+  color: #999999;
+}
+button.update-timelogs {
+  background-color: hsl(134, 61%, 41%);
+  color: white;
+  border: 1px solid hsl(134, 61%, 41%);
+}
+button.update-timelogs:not(:disabled):hover {
+  color: white;
+  border-color: hsl(134, 61%, 36%);
+  background-color: hsl(134, 61%, 36%);
+}
+button.update-timelogs:disabled {
+  color: #999999;
+  background-color: hsl(134, 61%, 60%);
+  border-color: hsl(134, 61%, 60%);
 }
