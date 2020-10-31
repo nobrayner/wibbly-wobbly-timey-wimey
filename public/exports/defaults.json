@@ -1,0 +1,14 @@
+[
+  {
+    "name": "JIRA",
+    "ticketmatcher": "[A-Z]+-[0-9]+",
+    "endpoint": "https://jira.mycompany.com/",
+    "requesttemplate": "{\n\t\"ticket_id\": {{TICKET}},\n\t\"user\": {{USER}}\n}",
+    "settings": [
+      {
+        "name": "User",
+        "type": "text"
+      }
+    ]
+  }
+]

@@ -15,14 +15,19 @@
            :value="timeEntry.ticketID" @input="timeEntryUpdate('ticketID', $event)" class="uppercase ticket-id" required />
 
     <label :for="'time_entry_details_' + timeEntry.id" class="title details-label">Details</label>
-    <textarea :ref="'time_entry_details_' + timeEntry.id" :name="'time_entry_details_' + timeEntry.id" class="details"
-              :value="timeEntry.details" @input="expand_textarea(timeEntry.id); timeEntryUpdate('details', $event)" required ></textarea>
+    <e-textarea :refkey="'time_entry_details_' + timeEntry.id" :name="'time_entry_details_' + timeEntry.id" :value="timeEntry.details"
+                @input="timeEntryUpdate('details', $event)" :required="true" />
   </section>
 </template>
 
 <script>
+import ETextArea from './ExpandingTextArea.vue'
+
 export default {
   name: 'TimeEntry',
+  components: {
+    'e-textarea': ETextArea
+  },
   props: {
     timeEntryID: {
       required: true
@@ -34,11 +39,6 @@ export default {
     }
   },
   methods: {
-    expand_textarea (id) {
-      var textarea = this.$refs['time_entry_details_' + id]
-      textarea.style.height = '' /* Reset the height */
-      textarea.style.height = (textarea.scrollHeight + 2) + 'px'
-    },
     timeEntryUpdate (property, e) {
       this.$store.dispatch('updateTimeEntry', {
         timeEntryID: this.timeEntry.id,
@@ -49,12 +49,100 @@ export default {
     removeTimeEntry () {
       this.$store.dispatch('removeTimeEntry', this.timeEntryID)
     }
-  },
-  mounted () {
-    this.expand_textarea(this.timeEntryID)
   }
 }
 </script>
 
-<style>
+<style scoped>
+label {
+  padding: 0.5em;
+  color: #777777;
+}
+input, textarea {
+  vertical-align: top;
+  border: 1px solid transparent;
+  transition: border 0.2s ease-in-out;
+}
+input:hover, input:focus, textarea:hover, textarea:focus {
+  border-color: #999999;
+}
+input:not(:valid), textarea:not(:valid) {
+  border-color: red;
+}
+.gray {
+  color: #999999;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+button.remove-time-entry {
+  grid-area: x;
+  margin: 0;
+  width: 2em;
+  height: 100%;
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+.time-entry:hover > button.remove-time-entry, .time-entry:focus > button.remove-time-entry {
+  color: white;
+  opacity: 1;
+  border-color: red;
+  pointer-events: auto;
+}
+.time-start {
+  grid-area: s;
+}
+.time-end {
+  grid-area: e;
+}
+.ticket-id {
+  grid-area: t;
+}
+.details {
+  grid-area: d;
+}
+
+.time-entry {
+  display: grid;
+  grid-template-columns: 2em minmax(5.5em, 2.25fr) minmax(6.5em, 3.25fr) minmax(10em, 5fr);
+  grid-template-areas:
+    "x sl el tl"
+    "x s  e  t "
+    "x dl .  . "
+    "x d  d  d ";
+  margin-bottom: 1em;
+}
+.time-start-label {
+  grid-area: sl;
+}
+.time-end-label {
+  grid-area: el;
+}
+.ticket-id-label {
+  grid-area: tl;
+}
+.details-label {
+  grid-area: dl;
+}
+
+@media screen and (min-width: 754px) {
+  .time-entry {
+    grid-template-columns: 2em 5.5em 6.5em 10em 1fr;
+    grid-template-areas:
+      "x s e t d"
+  }
+  .time-entry > input:nth-child(n+4), .time-entry > textarea {
+    margin-left: 1em;
+  }
+  .time-start-label, .time-end-label, .ticket-id-label, .details-label {
+    visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+}
 </style>

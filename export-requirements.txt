@@ -1,0 +1,7 @@
+timey-wimey export API
+
+- Multiple Exports needs to be able to be setup
+- Each Export:
+  - Has a regex expression for ticket id matching
+  - HTTP Method for the export request (GET, POST, PUT) - default is POST
+  - Export request body. This is a json editor that allows for complete customization using parameters that match up to the timesheet entry fields/calcs
